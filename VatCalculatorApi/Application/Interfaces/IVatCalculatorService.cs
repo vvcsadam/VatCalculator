@@ -5,6 +5,6 @@ namespace VatCalculatorApi.Application.Interfaces
 {
     public interface IVatCalculatorService
     {
-        VatCalculation CalculateVat(decimal? vat, decimal? net, decimal? gross, int? vatRate);
+        VatCalculation CalculateVat(decimal? net, decimal? gross, decimal? vat, int? vatRate);
     }
 }

@@ -10,7 +10,7 @@ namespace VatCalculatorApi.Application.Validators
             if (vatCalculation == null)
                 throw new ArgumentNullException(nameof(vatCalculation), "VAT calculation cannot be null.");
 
-            if (Enum.IsDefined(typeof(VatRate), vatCalculation.VatRate))
+            if (!Enum.IsDefined(typeof(VatRate), vatCalculation.VatRate))
                 throw new ArgumentException("Invalid VAT rate. Allowed values: 10%, 13%, 20%.");
 
             int providedValuesCount = 0;
