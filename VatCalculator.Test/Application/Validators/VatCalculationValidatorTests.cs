@@ -1,4 +1,5 @@
-﻿using VatCalculatorApi.Application.Validators;
+﻿using VatCalculatorApi.Application.Interfaces;
+using VatCalculatorApi.Application.Validators;
 using VatCalculatorApi.Domain.Entities;
 using VatCalculatorApi.Domain.Enums;
 
@@ -6,6 +7,13 @@ namespace VatCalculator.Test.Application.Validators
 {
     public class VatCalculationValidatorTests
     {
+        private readonly IValidator<VatCalculation> _validator;
+
+        public VatCalculationValidatorTests()
+        {
+            _validator = new VatCalculationValidator();
+        }
+
         [Fact]
         public void Validate_ShouldThrowArgumentNullException_WhenVatCalculationIsNull()
         {
@@ -13,7 +21,7 @@ namespace VatCalculator.Test.Application.Validators
             VatCalculation vatCalculation = null;
 
             // Act
-            var exception = Assert.Throws<ArgumentNullException>(() => VatCalculationValidator.Validate(vatCalculation));
+            var exception = Assert.Throws<ArgumentNullException>(() => _validator.Validate(vatCalculation));
 
             //Assert
             Assert.Equal("vatCalculation", exception.ParamName);
@@ -30,7 +38,7 @@ namespace VatCalculator.Test.Application.Validators
             };
 
             // Act
-            var exception = Assert.Throws<ArgumentException>(() => VatCalculationValidator.Validate(vatCalculation));
+            var exception = Assert.Throws<ArgumentException>(() => _validator.Validate(vatCalculation));
 
             //Assert
             Assert.Equal("Invalid VAT rate. Allowed values: 10%, 13%, 20%.", exception.Message);
@@ -47,7 +55,7 @@ namespace VatCalculator.Test.Application.Validators
             };
 
             // Act
-            var exception = Record.Exception(() => VatCalculationValidator.Validate(vatCalculation));
+            var exception = Record.Exception(() => _validator.Validate(vatCalculation));
 
             //Assert
             Assert.Null(exception);
@@ -65,7 +73,7 @@ namespace VatCalculator.Test.Application.Validators
             };
 
             // Act
-            var exception = Assert.Throws<ArgumentException>(() => VatCalculationValidator.Validate(vatCalculation));
+            var exception = Assert.Throws<ArgumentException>(() => _validator.Validate(vatCalculation));
 
             //Assert
             Assert.Equal("You must provide exactly one value: Net, Gross, or VAT.", exception.Message);
@@ -84,7 +92,7 @@ namespace VatCalculator.Test.Application.Validators
             };
 
             // Act
-            var exception = Assert.Throws<ArgumentException>(() => VatCalculationValidator.Validate(vatCalculation));
+            var exception = Assert.Throws<ArgumentException>(() => _validator.Validate(vatCalculation));
 
             //Assert
             Assert.Equal("You must provide exactly one value: Net, Gross, or VAT.", exception.Message);
@@ -106,7 +114,7 @@ namespace VatCalculator.Test.Application.Validators
             };
 
             // Act
-            var exception = Assert.Throws<ArgumentException>(() => VatCalculationValidator.Validate(vatCalculation));
+            var exception = Assert.Throws<ArgumentException>(() => _validator.Validate(vatCalculation));
 
             //Assert
             Assert.Equal("You must provide exactly one value: Net, Gross, or VAT.", exception.Message);
@@ -128,7 +136,7 @@ namespace VatCalculator.Test.Application.Validators
             };
 
             // Act
-            var exception = Record.Exception(() => VatCalculationValidator.Validate(vatCalculation));
+            var exception = Record.Exception(() => _validator.Validate(vatCalculation));
 
             //Assert
             Assert.Null(exception);
