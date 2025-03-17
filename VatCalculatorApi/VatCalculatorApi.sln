@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VatCalculatorApi", "VatCalculatorApi.csproj", "{A7A2547B-6166-4DF4-8F71-1E22CC051D76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VatCalculator.Api", "VatCalculator.Api.csproj", "{A7A2547B-6166-4DF4-8F71-1E22CC051D76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VatCalculator.Test", "..\VatCalculator.Test\VatCalculator.Test.csproj", "{158C2521-FAA3-41F2-AE28-B41EF5F3DB50}"
 EndProject
