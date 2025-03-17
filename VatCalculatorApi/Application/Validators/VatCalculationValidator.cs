@@ -1,11 +1,12 @@
-﻿using VatCalculatorApi.Domain.Entities;
+﻿using VatCalculatorApi.Application.Interfaces;
+using VatCalculatorApi.Domain.Entities;
 using VatCalculatorApi.Domain.Enums;
 
 namespace VatCalculatorApi.Application.Validators
 {
-    public static class VatCalculationValidator
+    public class VatCalculationValidator: IValidator<VatCalculation>
     {
-        public static void Validate(VatCalculation vatCalculation)
+        public void Validate(VatCalculation vatCalculation)
         {
             if (vatCalculation == null)
                 throw new ArgumentNullException(nameof(vatCalculation), "VAT calculation cannot be null.");

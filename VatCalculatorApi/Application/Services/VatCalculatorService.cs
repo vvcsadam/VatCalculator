@@ -6,6 +6,13 @@ namespace VatCalculatorApi.Application.Services
 {
     public class VatCalculatorService : IVatCalculatorService
     {
+        private readonly IValidator<VatCalculation> _validator;
+
+        public VatCalculatorService(IValidator<VatCalculation> validator) 
+        { 
+            _validator = validator;
+        }
+
         public VatCalculation CalculateVat(decimal? net, decimal? gross, decimal? vat, int? vatRate)
         {
             var vatCalculation = new VatCalculation
@@ -16,7 +23,7 @@ namespace VatCalculatorApi.Application.Services
                 VatRate = vatRate ?? 0
             };
 
-            VatCalculationValidator.Validate(vatCalculation);
+            _validator.Validate(vatCalculation);
 
             var calculatedNet = net > 0 ? net.Value : (gross > 0 ? gross.Value / (1 + (decimal)vatRate.Value / 100) : (vat.Value / ((decimal)vatRate.Value / 100)));
             var calculatedGross = gross > 0 ? gross.Value : (net > 0 ? net.Value * (1 + (decimal)vatRate.Value / 100) : vat.Value + calculatedNet);
