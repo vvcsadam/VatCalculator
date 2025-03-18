@@ -18,7 +18,7 @@ namespace VatCalculator.Test.Application.Mappers
         }
 
         [Fact]
-        public void Map_Should_Map_All_Properties_Correctly()
+        public void Map_ShouldMapAllProperties_Correctly()
         {
             // Arrange
             var dto = new VatCalculationDto { Net = 11, Gross = 22, Vat = 33, VatRate = 44 };
@@ -35,7 +35,7 @@ namespace VatCalculator.Test.Application.Mappers
         }
 
         [Fact]
-        public void Map_ShouldSetDefaultValues_WhenNullPropertiesInDto()
+        public void Map_WhenNullPropertiesInDto_SetDefaultValues()
         {
             // Arrange
             var dto = new VatCalculationDto();
