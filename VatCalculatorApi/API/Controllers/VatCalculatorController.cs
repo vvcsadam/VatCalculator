@@ -17,24 +17,24 @@ namespace VatCalculatorApi.API.Controllers
             _vatCalculatorService = vatCalculatorService;
         }
 
-        [HttpPost()]
-        public IActionResult Calculate([FromBody] VatCalculationDto request)
+        [HttpPost]
+        public IActionResult Calculate([FromBody] VatCalculationDto vatCalculationDto)
         {
             try
             {
-                var result = _vatCalculatorService.CalculateVat(request.Net, request.Gross, request.Vat, request.VatRate);
-                _logger.LogInformation(string.Format("Returning success response"), request);
+                var result = _vatCalculatorService.CalculateVat(vatCalculationDto);
+                _logger.LogInformation(string.Format("Returning success response"), result);
 
                 return Ok(result);
             }
             catch (ArgumentException e)
             {
-                _logger.LogError(e, e.Message, request);
+                _logger.LogError(e, e.Message, vatCalculationDto);
                 return BadRequest(new { error = e.Message });
             }
             catch (Exception e)
             {
-                _logger.LogError(e, e.Message, request);
+                _logger.LogError(e, e.Message, vatCalculationDto);
                 return BadRequest(new { error = "An unexpected error occurred while calculating." });
             }
         }

@@ -3,7 +3,7 @@
     public enum VatRate
     {
         Vat10 = 10,
-        Vat20 = 20,
-        Vat30 = 30
+        Vat13 = 13,
+        Vat20 = 20
     }
 }

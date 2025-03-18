@@ -1,5 +1,6 @@
-﻿using VatCalculatorApi.Application.Interfaces;
-using VatCalculatorApi.Application.Validators;
+﻿using VatCalculator.Api.Application.Interfaces;
+using VatCalculatorApi.Application.DTO;
+using VatCalculatorApi.Application.Interfaces;
 using VatCalculatorApi.Domain.Entities;
 
 namespace VatCalculatorApi.Application.Services
@@ -7,35 +8,30 @@ namespace VatCalculatorApi.Application.Services
     public class VatCalculatorService : IVatCalculatorService
     {
         private readonly IValidator<VatCalculation> _validator;
+        private readonly IMapper<VatCalculationDto, VatCalculation> _mapper;
 
-        public VatCalculatorService(IValidator<VatCalculation> validator) 
+        public VatCalculatorService(IValidator<VatCalculation> validator, IMapper<VatCalculationDto, VatCalculation> mapper) 
         { 
             _validator = validator;
+            _mapper = mapper;
         }
 
-        public VatCalculation CalculateVat(decimal? net, decimal? gross, decimal? vat, int? vatRate)
+        public VatCalculation CalculateVat(VatCalculationDto vatCalculationDto)
         {
-            var vatCalculation = new VatCalculation
-            {
-                Net = net ?? 0,
-                Gross = gross ?? 0,
-                Vat = vat ?? 0,
-                VatRate = vatRate ?? 0
-            };
+            var vatCalculation = new VatCalculation();
+            _mapper.Map(vatCalculationDto, vatCalculation);
 
             _validator.Validate(vatCalculation);
 
-            var calculatedNet = net > 0 ? net.Value : (gross > 0 ? gross.Value / (1 + (decimal)vatRate.Value / 100) : (vat.Value / ((decimal)vatRate.Value / 100)));
-            var calculatedGross = gross > 0 ? gross.Value : (net > 0 ? net.Value * (1 + (decimal)vatRate.Value / 100) : vat.Value + calculatedNet);
-            var calculatedVat = vat > 0 ? vat.Value : (gross > 0 ? gross.Value - calculatedNet : calculatedNet * (decimal)vatRate.Value / 100);
+            var calculatedNet = vatCalculation.Net > 0 ? vatCalculation.Net : (vatCalculation.Gross > 0 ? vatCalculation.Gross / (1 + (decimal)vatCalculation.VatRate / 100) : (vatCalculation.Vat / ((decimal)vatCalculation.VatRate / 100)));
+            var calculatedGross = vatCalculation.Gross > 0 ? vatCalculation.Gross : (vatCalculation.Net > 0 ? vatCalculation.Net * (1 + (decimal)vatCalculation.VatRate / 100) : vatCalculation.Vat + calculatedNet);
+            var calculatedVat = vatCalculation.Vat > 0 ? vatCalculation.Vat : (vatCalculation.Gross > 0 ? vatCalculation.Gross - calculatedNet : calculatedNet * (decimal)vatCalculation.VatRate / 100);
 
-            return new VatCalculation
-            {
-                Net = calculatedNet,
-                Gross = calculatedGross,
-                Vat = calculatedVat,
-                VatRate = vatRate.Value
-            };
+            vatCalculation.Net = calculatedNet;
+            vatCalculation.Gross = calculatedGross;
+            vatCalculation.Vat = calculatedVat;
+
+            return vatCalculation;
         }
     }
 }
