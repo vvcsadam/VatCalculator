@@ -76,7 +76,7 @@ namespace VatCalculator.Test.Application.Validators
             var exception = Assert.Throws<ArgumentException>(() => _validator.Validate(vatCalculation));
 
             //Assert
-            Assert.Equal("You must provide exactly one value: Net, Gross, or VAT.", exception.Message);
+            Assert.Equal("You must provide exactly one positive value: Net, Gross, or VAT.", exception.Message);
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace VatCalculator.Test.Application.Validators
             var exception = Assert.Throws<ArgumentException>(() => _validator.Validate(vatCalculation));
 
             //Assert
-            Assert.Equal("You must provide exactly one value: Net, Gross, or VAT.", exception.Message);
+            Assert.Equal("You must provide exactly one positive value: Net, Gross, or VAT.", exception.Message);
         }
 
         [Theory]
@@ -117,7 +117,7 @@ namespace VatCalculator.Test.Application.Validators
             var exception = Assert.Throws<ArgumentException>(() => _validator.Validate(vatCalculation));
 
             //Assert
-            Assert.Equal("You must provide exactly one value: Net, Gross, or VAT.", exception.Message);
+            Assert.Equal("You must provide exactly one positive value: Net, Gross, or VAT.", exception.Message);
         }
 
         [Theory]

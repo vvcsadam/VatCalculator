@@ -20,7 +20,7 @@ namespace VatCalculatorApi.Application.Validators
             if (vatCalculation.Vat > 0) providedValuesCount++;
 
             if (providedValuesCount != 1)
-                throw new ArgumentException("You must provide exactly one value: Net, Gross, or VAT.");
+                throw new ArgumentException("You must provide exactly one positive value: Net, Gross, or VAT.");
 
             if (vatCalculation.Net < 0 || vatCalculation.Gross < 0 || vatCalculation.Vat < 0)
                 throw new ArgumentException("Amounts cannot be negative.");

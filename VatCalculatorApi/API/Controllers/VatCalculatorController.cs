@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using VatCalculatorApi.Application.DTO;
 using VatCalculatorApi.Application.Interfaces;
 
@@ -23,7 +24,7 @@ namespace VatCalculatorApi.API.Controllers
             try
             {
                 var result = _vatCalculatorService.CalculateVat(vatCalculationDto);
-                _logger.LogInformation(string.Format("Returning success response"), result);
+                _logger.LogInformation(string.Format("Returning success response: {0}", JsonSerializer.Serialize(result)));
 
                 return Ok(result);
             }
